@@ -1,0 +1,104 @@
+{
+    "folderName": "testForm",
+    "formName": "My Test Form",
+    "width": "400px",
+    "orderByField": "myDate",
+    "order": "ASC",
+    "inputs": [{
+            "type": "text",
+            "properties": {
+                "name": "myText",
+                "label": "This is my Text input.",
+                "value": "Some prefilled text here is possible.",
+                "required": "required",
+                "showInTable": "true"
+            }
+        },
+        {
+            "type": "time",
+            "properties": {
+                "name": "myTime",
+                "label": "This is my Time input.",
+                "value": "13:00",
+                "required": "required",
+                "showInTable": "true"
+            }
+        },
+        {
+            "type": "integer",
+            "properties": {
+                "name": "myInteger",
+                "label": "This is my integer input (0 to 100).",
+                "value": "50",
+                "min": "0",
+                "max": "100",
+                "required": "required",
+                "showInTable": "true"
+            }
+        },
+        {
+            "type": "float",
+            "properties": {
+                "name": "myFloat",
+                "label": "This is my float input (0.00 to 99.99).",
+                "value": "51.5",
+                "min": "0.00",
+                "max": "99.99",
+                "step": "0.01",
+                "required": "required",
+                "showInTable": "true"
+            }
+        },
+        {
+            "type": "checkbox",
+            "properties": {
+                "name": "myCheckbox",
+                "label": "This is my checkbox (not set to required but pre-checked).",
+                "value": "on",
+                "checked": "checked",
+                "required": "",
+                "showInTable": "true"
+            }
+        },
+        {
+            "type": "textarea",
+            "properties": {
+                "name": "myTextarea",
+                "label": "Here is a textarea:",
+                "value": "You can put prefilled text here.",
+                "required": "",
+                "showInTable": "true"
+            }
+        },
+        {
+            "type": "radio",
+            "properties": {
+                "name": "myRadio",
+                "label": "Do you think this form maker is useful?",
+                "required": "required",
+                "buttons": [{
+                        "value": "n",
+                        "label": "Not Really."
+                    },
+                    {
+                        "value": "y",
+                        "label": "Yes"
+                    },
+                    {
+                        "value": "unsure",
+                        "label": "Rather not say."
+                    }
+                ]
+            }
+        },
+        {
+            "type": "date",
+            "properties": {
+                "name": "myDate",
+                "label": "My Date set to January 31st, 2022",
+                "value": "2022-01-31",
+                "required": "required"
+            }
+        }
+    ]
+}
