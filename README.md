@@ -136,6 +136,8 @@ Here is an example:
 
 ## A special thanks to Otilia Kocsis, PhD who kindly agreed to guide me on this project.  This was the basis for my internship in Software Engineering at West Virginia University Community College, located in Wheeling WV USA.
 
+### Interestingly, it uses multiple languages and formats including Python, JavaScript, PHP, HTML, CSS, JSON, SQL, and CSV.
+
 
 http://www.boktech.eu/otiliakocsis/
 
