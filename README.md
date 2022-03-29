@@ -155,7 +155,7 @@ Take the radio button for example.  To filter you will see 2 text inputs, and if
 
 - About 'float' and 'integer' -  This distinction is made to determine how the fields are stored in the database.  In JavaScript, they are just 'Numbers'.  The distinction also allows you to 'step' the input function with the desired number of decimal places in the JSON file.
 
------------------s
+-----------------
 ### TODO List:  More commenting on the json template is planned, so it will self-contain instructions on how to fill out.
 
 ------------------
