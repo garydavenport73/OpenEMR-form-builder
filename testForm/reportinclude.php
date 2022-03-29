@@ -27,53 +27,54 @@ $record = formFetch($table_name, $id); //fetch the current record
 
     <div class="general">
 <!-- ----------GENERATE---------------- -->
-			<div>
-				<label for='myText'>This is my Text input.</label>
-			</div>
-			<div>
+		<div>
+			<label for='myText'>This is my Text input.</label>
+		</div>
+		<div>
 			<?php echo "
 				<input type='text' value='$myText' disabled>
 			"; ?>
-			</div>
-			<div>
-				<label for='myTime'>This is my Time input.</label>
-			</div>
-			<div>
+		</div>
+		<div>
+			<label for='myTime'>This is my Time input.</label>
+		</div>
+		<div>
 			<?php echo"
 				<input type='time' value='$myTime' disabled>
 			"; ?>
-			</div>
-			<div>
-				<label for='myInteger'>This is my integer input (0 to 100).</label>
-			</div>
-			<div>
+		</div>
+		<div>
+			<label for='myInteger'>This is my integer input (0 to 100).</label>
+		</div>
+		<div>
 			<?php echo"
 				<input type='number' value='$myInteger' disabled>
 			"; ?>
-			</div>
-			<div>
-				<label for='myFloat'>This is my float input (0.00 to 99.99).</label>
-			</div>
-			<div>
+		</div>
+		<div>
+			<label for='myFloat'>This is my float input (0.00 to 99.99).</label>
+		</div>
+		<div>
 			<?php echo"
 				<input type='number' value='$myFloat' disabled>
 			"; ?>
-			</div>
-			<div>
-<label for='myCheckbox'>This is my checkbox (not set to required but pre-checked).</label>				<input type='checkbox' <?php echo ($myCheckbox == 'on') ? 'checked' : ''; ?> disabled>
-			</div>
-			<div>
-				<label for='myTextarea'>Here is a textarea:</label>
-			</div>
-			<div>
+		</div>
+		<div>
+			<label for='myCheckbox'>This is my checkbox (not set to required but pre-checked).</label>
+				<input type='checkbox' <?php echo ($myCheckbox == 'on') ? 'checked' : ''; ?> disabled>
+		</div>
+		<div>
+			<label for='myTextarea'>Here is a textarea:</label>
+		</div>
+		<div>
 				<?php echo "
 				<textarea disabled>$myTextarea</textarea>
 				"; ?>
-			</div>
-			<div>
-				<label for='myRadio'>Do you think this form maker is useful?</label>
-			</div>
-			<div>
+		</div>
+		<div>
+			<label for='myRadio'>Do you think this form maker is useful?</label>
+		</div>
+		<div>
 			<?php echo "
 				<label for='myRadio_n'>Not Really.</label>
 <input type='radio' value='n' $myRadio_n disabled>
@@ -82,15 +83,15 @@ $record = formFetch($table_name, $id); //fetch the current record
 				<label for='myRadio_unsure'>Rather not say.</label>
 <input type='radio' value='unsure' $myRadio_unsure disabled>
 			"; ?>
-			</div>
-			<div>
-				<label for='myDate'>My Date set to January 31st, 2022</label>
-			</div>
-			<div>
+		</div>
+		<div>
+			<label for='myDate'>My Date set to January 31st, 2022</label>
+		</div>
+		<div>
 			<?php echo "
 				<input type='date' value='$myDate' disabled>
 			"; ?>
-			</div>
+		</div>
     </div>
 
     <script>
@@ -160,6 +161,11 @@ $record = formFetch($table_name, $id); //fetch the current record
         }
         let thisStartFilterValue = document.getElementById(reportTableBaseName + "_start_filter_value").value.trim();
         let thisEndFilterValue = document.getElementById(reportTableBaseName + "_end_filter_value").value.trim();
+        if ((orderByVariable === 'integer') || (orderByVariable === 'float')) {
+            thisStartFilterValue = Number(thisStarFilterValue);
+            thisEndFilterValue = Number(thisEndFilterValue);
+        }
+
         //four cases,   start "",           end ""              make no comparisons, show all  OO
         //              start something,    end ""              check only start               XO
         //              start "",           end something       check only end                 OX
@@ -176,7 +182,13 @@ $record = formFetch($table_name, $id); //fetch the current record
             tableString += "<th>" + fields[i] + "</th>";
         }
         tableString += "</tr>";
+        let rowTestValue = '';
         for (let i = 0; i < tableContents.length; i++) {
+            rowTestValue = tableContents[i][orderByVariable];
+            if ((orderByVariable === 'integer') || (orderByVariable === 'float')) {
+                rowTestValue = Number(tableContents[i][orderByVariable]);
+            }
+
             if ((thisStartFilterValue === "") && (thisEndFilterValue === "")) { //OO
                 tableString += "<tr>";
                 for (let j = 0; j < fields.length; j++) {
@@ -184,7 +196,7 @@ $record = formFetch($table_name, $id); //fetch the current record
                 }
                 tableString += "</tr>";
             } else if ((thisStartFilterValue != "") && (thisEndFilterValue === "")) { //XO
-                if (tableContents[i][orderByVariable] >= thisStartFilterValue) {
+                if (rowTestValue >= thisStartFilterValue) {
                     tableString += "<tr>";
                     for (let j = 0; j < fields.length; j++) {
                         tableString += "<td>" + tableContents[i][fields[j]] + "</td>";
@@ -192,7 +204,7 @@ $record = formFetch($table_name, $id); //fetch the current record
                     tableString += "</tr>";
                 }
             } else if ((thisStartFilterValue === "") && (thisEndFilterValue != "")) { //OX
-                if (tableContents[i][orderByVariable] <= thisEndFilterValue) {
+                if (rowTestValue <= thisEndFilterValue) {
                     tableString += "<tr>";
                     for (let j = 0; j < fields.length; j++) {
                         tableString += "<td>" + tableContents[i][fields[j]] + "</td>";
@@ -200,7 +212,7 @@ $record = formFetch($table_name, $id); //fetch the current record
                     tableString += "</tr>";
                 }
             } else if ((thisStartFilterValue != "") && (thisEndFilterValue != "")) { //XX
-                if ((tableContents[i][orderByVariable] >= thisStartFilterValue) && (tableContents[i][orderByVariable] <=
+                if ((rowTestValue >= thisStartFilterValue) && (rowTestValue <=
                         thisEndFilterValue)) {
                     tableString += "<tr>";
                     for (let j = 0; j < fields.length; j++) {
@@ -210,7 +222,7 @@ $record = formFetch($table_name, $id); //fetch the current record
                 }
             }
         }
-        tableString+="</table>";
+        tableString += "</table>";
         thisTableInnerDiv.innerHTML = tableString;
     }
     </script>
@@ -226,7 +238,6 @@ $orderByVariable = 'myDate';
 $orderByType = 'date';
 $fieldNamesArray = array('myText','myTime','myInteger','myFloat','myCheckbox','myTextarea','myRadio','myDate');
 
-
 //////////////////////////////////////////////////////////////////////////////////////////
 $numberOfFields = count($fieldNamesArray);
 
@@ -235,7 +246,9 @@ if ($numberOfFields<=0){
     $showTableButtonAndCSVButton =" style='display:none;' ";;
 }
 
-echo "<script>orderByVariable='$orderByVariable';</script>";  //using non-strict mode declaration of object
+echo "<script>orderByVariable='$orderByVariable';</script>";
+echo "<script>orderByType='$orderByType';</script>";
+  //using non-strict mode declaration of object
 //$result_set = array(); //all results from sql query, just in case this is needed in the future
 $table_data = array(); //just the field results we need for building the table
 
@@ -275,6 +288,10 @@ function convertTableToCSV(theId) {
     let reportTableBaseName = theId.split("_csv_button")[0];
     let thisStartFilterValue = document.getElementById(reportTableBaseName + "_start_filter_value").value.trim();
     let thisEndFilterValue = document.getElementById(reportTableBaseName + "_end_filter_value").value.trim();
+    if ((orderByVariable === 'integer') || (orderByVariable === 'float')) {
+        thisStartFilterValue = Number(thisStarFilterValue);
+        thisEndFilterValue = Number(thisEndFilterValue);
+    }
 
     //four cases,   start "",           end ""              make no comparisons, show all  OO
     //              start something,    end ""              check only start               XO
@@ -293,8 +310,14 @@ function convertTableToCSV(theId) {
         str += "\n";
 
         //build the table
-
+        let rowTestValue = '';
         for (let i = 0; i < tableContents.length; i++) {
+
+            rowTestValue = tableContents[i][orderByVariable];
+            if ((orderByVariable === 'integer') || (orderByVariable === 'float')) {
+                rowTestValue = Number(tableContents[i][orderByVariable]);
+            }
+
             if ((thisStartFilterValue === "") && (thisEndFilterValue === "")) { //OO
                 for (let field in tableContents[i]) {
                     str += "\"";
@@ -304,7 +327,7 @@ function convertTableToCSV(theId) {
                 str = str.substr(0, str.length - 1);
                 str += "\n";
             } else if ((thisStartFilterValue != "") && (thisEndFilterValue === "")) { //XO
-                if (tableContents[i][orderByVariable] >= thisStartFilterValue) {
+                if (rowTestValue >= thisStartFilterValue) {
                     for (let field in tableContents[i]) {
                         str += "\"";
                         str += tableContents[i][field];
@@ -314,7 +337,7 @@ function convertTableToCSV(theId) {
                     str += "\n";
                 }
             } else if ((thisStartFilterValue === "") && (thisEndFilterValue != "")) { //OX
-                if (tableContents[i][orderByVariable] <= thisEndFilterValue) {
+                if (rowTestValue <= thisEndFilterValue) {
                     for (let field in tableContents[i]) {
                         str += "\"";
                         str += tableContents[i][field];
@@ -324,7 +347,7 @@ function convertTableToCSV(theId) {
                     str += "\n";
                 }
             } else if ((thisStartFilterValue != "") && (thisEndFilterValue != "")) { //XX
-                if ((tableContents[i][orderByVariable] >= thisStartFilterValue) && (tableContents[i][orderByVariable] <=
+                if ((rowTestValue >= thisStartFilterValue) && (rowTestValue <=
                         thisEndFilterValue)) {
                     for (let field in tableContents[i]) {
                         str += "\"";
@@ -387,11 +410,36 @@ if ($orderByVariable===""){
 } 
 ?>
 
+    <?php 
+$htmlInputType = 'text';
+if (($orderByType==='integer') || ($orderByType==='float')){
+    $htmlInputType = 'number';
+}
+else if (($orderByType==='checkbox') || ($orderByType==='radio') || ($orderByType==='textarea')){
+    $htmlInputType = 'text';
+}
+else{
+    $htmlInputType=$orderByType;
+}
+?>
+
     <div class='general' <?php echo $showOrderInputs;?>>
-        <label for="<?php echo $uniqueReportId . '_start_filter_value'; ?>">Start:</label>
-        <input type='<?php echo $orderByType;?>' id="<?php echo $uniqueReportId . '_start_filter_value'; ?>">
-        <label for="<?php echo $uniqueReportId . '_end_filter_value'; ?>">End:</label>
-        <input type='<?php echo $orderByType;?>' id="<?php echo $uniqueReportId . '_end_filter_value'; ?>">
+        <div>
+            Sort by: <?php echo $orderByVariable;?>
+        </div>
+        <hr>
+        <div>
+            <label for="<?php echo $uniqueReportId . '_start_filter_value'; ?>">Start:</label>
+        </div>
+        <div>
+            <input type='<?php echo $htmlInputType;?>' id="<?php echo $uniqueReportId . '_start_filter_value'; ?>">
+        </div>
+        <div>
+            <label for="<?php echo $uniqueReportId . '_end_filter_value'; ?>">End:</label>
+        </div>
+        <div>
+            <input type='<?php echo $htmlInputType;?>' id="<?php echo $uniqueReportId . '_end_filter_value'; ?>">
+        </div>
     </div>
 
 
