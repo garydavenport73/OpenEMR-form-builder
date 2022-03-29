@@ -132,23 +132,42 @@ Here is an example:
 ```
 
 ### Also in this repository, there is a gui-based program (text2string2.py).  I wrote it in order to copy code to strings for writing to text files.  It requires tkinter in Python3.  I leave it in this repository because it helps me work on this repository and is nice to have on hand.  It is not necessary for building forms.
+--------------------------
+### About sorting:
+If you choose to sort the table by a field with upper and lower limits, here is how it works.
 
-#### There are likely known isssues at this moment using the "orderByField".  Right now, the field values are compared but as strings.  This will work for text, textArea, date, and time.  See planned fixes for data types below.
+<table>
+<tr><th>Your Input Field:</th><th>Input Filter Type</th><th>Compares as</th></tr>
+<tr><td>date</td><td>date</td><td>string</td></tr>
+<tr><td>time</td><td>time</td><td>string</td></tr>
+<tr><td>text</td><td>text</td><td>string</td></tr>
+<tr><td>textarea</td><td>text</td><td>string</td></tr>
+<tr><td>integer</td><td>number</td><td>number</td></tr>
+<tr><td>float</td><td>number</td><td>number</td></tr>
+<tr><td>checkbox</td><td>string</td><td>string</td></tr>
+<tr><td>radio</td><td>string</td><td>string</td></tr>
+</table>
 
-#### TODO List:
+Take the radio button for example.  To filter you will see 2 text inputs, and if the table rows radio button value like "yes" or "no" for example will be compared alphabetically to the start and end filter inputs.
 
-#### Here are this fixes coming for integer, float, checkbox and radio.  For integer and float, as of right now, they will be compared as strings, which is not what is wanted, so this will be corrected in the near future by converting the strings to numbers.  For checkbox, and radio, I intend to show a text input where you can fill in the value for sorting.  It will sort by string and compare the values of the checkbox and radio.  For example, if you wanted all checkboxes that were 'on' you could put 'on' in the start field, and any row that is greater than or equal to 'on' (string equality) would show up.  Likewise, alphabetical filtering can be used with radio buttons by setting the start and end filters with a string, and the values of the radio buttons values will be compared as strings.
+### Notes:
+- String comparisons are made using JavaScript string comparision, which is case sensitive.  The table returned from the database may not be, but is ordered by using the databases ORDER BY rule when the SQL query runs.
 
-#### More commenting on the json template is planned, so it will self contain instructions on how to fill out.
+- About 'float' and 'integer' -  This distinction is made to determine how the fields are stored in the database.  In JavaScript, they are just 'Numbers'.  The distinction also allows you to 'step' the input function with the desired number of decimal places in the JSON file.
 
+-----------------s
+### TODO List:  More commenting on the json template is planned, so it will self-contain instructions on how to fill out.
 
-## A special thanks to Otilia Kocsis, PhD who kindly agreed to guide me on this project.  This was the basis for my internship in Software Engineering at West Virginia University Community College, located in Wheeling WV USA.
-
-### Interestingly, it uses multiple languages and formats including Python, JavaScript, PHP, HTML, CSS, JSON, SQL, and CSV.
-
+------------------
+## A special thanks to Otilia Kocsis, PhD who kindly agreed to guide me on this project.  This was the basis for my internship in Software Engineering at West Virginia University Community College, located in Wheeling , WV USA.
+----------------
 
 http://www.boktech.eu/otiliakocsis/
 
 https://www.wvncc.edu
 
 https://www.wvncc.edu/programs/software-engineering-a.a.s/480
+
+------------------
+### Interestingly, it uses multiple languages and formats including Python, JavaScript, PHP, HTML, CSS, JSON, SQL, and CSV.
+
